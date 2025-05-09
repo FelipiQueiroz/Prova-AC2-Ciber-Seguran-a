@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mensagens Seguras</title>
+</head>
+<body>
+  <h1>Envio de Mensagens Criptografadas</h1>
+  <form id="formMensagem">
+    <label>De: <input type="text" id="from" required /></label><br />
+    <label>Para: <input type="text" id="to" required /></label><br />
+    <label>Mensagem: <input type="text" id="message" required /></label><br />
+    <button type="submit">Enviar</button>
+  </form>
+
+  <h2>Mensagens Recebidas</h2>
+  <div>
+    <label>Usuário: <input type="text" id="usuarioConsulta" /></label>
+    <button onclick="carregarMensagens()">Atualizar</button>
+  </div>
+  <ul id="mensagensRecebidas"></ul>
+
+  <script>
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    document.getElementById('formMensagem').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const csrf = getCookie('csrfToken');
+      const from = document.getElementById('from').value;
+      const to = document.getElementById('to').value;
+      const message = document.getElementById('message').value;
+
+      const res = await fetch('/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify({ from, to, message, _csrf: csrf })
+      });
+
+      if (res.ok) {
+        document.getElementById('message').value = '';
+        await carregarMensagens();
+      } else {
+        alert('Erro ao enviar mensagem.');
+      }
+    });
+
+    async function carregarMensagens() {
+      const user = document.getElementById('usuarioConsulta').value;
+      if (!user) return;
+
+      const res = await fetch(`/messages/${user}`);
+      const mensagens = await res.json();
+
+      const lista = document.getElementById('mensagensRecebidas');
+      lista.innerHTML = '';
+      mensagens.forEach(msg => {
+        const li = document.createElement('li');
+        li.textContent = `De: ${msg.from} | Criptografada: ${msg.encrypted} | Decriptada: ${msg.decrypted}`;
+        lista.appendChild(li);
+      });
+    }
+  </script>
+</body>
+</html>
