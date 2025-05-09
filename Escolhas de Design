@@ -1,0 +1,6 @@
+| Componente                       | Escolha                                     | Justificativa                                                               |
+| -------------------------------- | ------------------------------------------- | --------------------------------------------------------------------------- |
+| **Criptografia AES (simétrica)** | `aes-256-cbc` com IV e chave 256 bits       | Simples, rápida, adequada para uma aplicação local e controlada             |
+| **Proteção CSRF com `csurf`**    | `cookie-based token`                        | Compatível com frontend moderno e seguro contra falsificações de requisição |
+| **Express + Fetch API**          | Estrutura leve e moderna                    | Ideal para aplicações simples, com controle total no fluxo                  |
+| **Token via Cookie**             | Frontend acessa token via `document.cookie` | Permite integração segura sem necessidade de headers personalizados         |
