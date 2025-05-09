@@ -1,0 +1,29 @@
+Criptografia Simétrica
+A criptografia simétrica utiliza uma única chave para criptografar e descriptografar as informações. Tanto o emissor quanto o receptor devem possuir essa mesma chave, o que exige um canal seguro para compartilhá-la.
+Características principais:
+Velocidade: Mais rápida que a criptografia assimétrica.
+Chave única: A mesma chave é usada para criptografar e descriptografar.
+Desafio principal: Distribuição segura da chave.
+Exemplos de algoritmos:
+AES (Advanced Encryption Standard)
+DES (Data Encryption Standard)
+
+Cenário prático:
+Comunicação interna de sistemas: Por exemplo, em uma VPN corporativa, onde as partes já têm um canal seguro para troca de chaves, a criptografia simétrica (como AES) é usada pela sua alta performance.
+
+Armazenamento de dados: Criptografar arquivos ou bancos de dados localmente com uma chave conhecida.
+
+Criptografia Assimétrica
+A criptografia assimétrica utiliza duas chaves diferentes, porém matematicamente relacionadas: uma chave pública (disponível a todos) e uma chave privada (mantida em segredo pelo dono).
+Características principais:
+Chave pública/privada: O que uma criptografa, apenas a outra pode descriptografar.
+Segurança na troca de dados: Não é necessário trocar segredos (chaves) previamente.
+Mais lenta em comparação à simétrica.
+Exemplos de algoritmos:
+RSA
+ECC (Elliptic Curve Cryptography)
+
+Cenário prático:
+Transações seguras na web (HTTPS): Os navegadores usam a chave pública do servidor para criptografar informações (como senhas e dados de cartão), que só o servidor pode descriptografar com sua chave privada.
+
+Assinaturas digitais: Um remetente assina um documento com sua chave privada, e qualquer um pode verificar a autenticidade usando a chave pública.
